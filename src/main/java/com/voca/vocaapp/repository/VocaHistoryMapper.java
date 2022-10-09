@@ -1,8 +1,8 @@
-package com.voca.app.vocaapp.repository;
+package com.voca.vocaapp.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.voca.app.vocaapp.domain.VocaHistoryVO;
+import com.voca.vocaapp.domain.VocaHistoryVO;
 
 @Mapper
 public interface VocaHistoryMapper {

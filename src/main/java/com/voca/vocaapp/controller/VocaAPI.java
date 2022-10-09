@@ -1,4 +1,4 @@
-package com.voca.app.vocaapp.controller;
+package com.voca.vocaapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.voca.app.vocaapp.domain.MarkDTO;
-import com.voca.app.vocaapp.domain.TodayDTO;
-import com.voca.app.vocaapp.service.VocaService;
+import com.voca.vocaapp.domain.MarkDTO;
+import com.voca.vocaapp.domain.TodayDTO;
+import com.voca.vocaapp.service.VocaService;
 
 import lombok.extern.slf4j.Slf4j;
 

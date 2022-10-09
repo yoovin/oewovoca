@@ -1,11 +1,11 @@
-package com.voca.app.vocaapp.service;
+package com.voca.vocaapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.voca.app.vocaapp.domain.MemberVO;
-import com.voca.app.vocaapp.repository.MemberMapper;
+import com.voca.vocaapp.domain.MemberVO;
+import com.voca.vocaapp.repository.MemberMapper;
 
 @Service
 public class MemberServiceImpl implements MemberService {

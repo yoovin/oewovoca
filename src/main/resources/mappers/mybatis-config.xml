@@ -7,11 +7,11 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
     <typeAliases>
-        <typeAlias alias="mvo" type="com.voca.app.vocaapp.domain.MemberVO"/>
-        <typeAlias alias="vvo" type="com.voca.app.vocaapp.domain.VocaVO"/>
-        <typeAlias alias="vdto" type="com.voca.app.vocaapp.domain.VocaDTO"/>
-        <typeAlias alias="hvo" type="com.voca.app.vocaapp.domain.HistoryVO"/>
-        <typeAlias alias="vhvo" type="com.voca.app.vocaapp.domain.VocaHistoryVO"/>
-        <typeAlias alias="sdto" type="com.voca.app.vocaapp.domain.SearchDTO"/>
+        <typeAlias alias="mvo" type="com.voca.vocaapp.domain.MemberVO"/>
+        <typeAlias alias="vvo" type="com.voca.vocaapp.domain.VocaVO"/>
+        <typeAlias alias="vdto" type="com.voca.vocaapp.domain.VocaDTO"/>
+        <typeAlias alias="hvo" type="com.voca.vocaapp.domain.HistoryVO"/>
+        <typeAlias alias="vhvo" type="com.voca.vocaapp.domain.VocaHistoryVO"/>
+        <typeAlias alias="sdto" type="com.voca.vocaapp.domain.SearchDTO"/>
     </typeAliases>
 </configuration>

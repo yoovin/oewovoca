@@ -1,7 +1,7 @@
-package com.voca.app.vocaapp.service;
+package com.voca.vocaapp.service;
 
-import com.voca.app.vocaapp.domain.MarkDTO;
-import com.voca.app.vocaapp.domain.TodayDTO;
+import com.voca.vocaapp.domain.MarkDTO;
+import com.voca.vocaapp.domain.TodayDTO;
 
 public interface VocaService {
     public TodayDTO getTodayList(int mno);

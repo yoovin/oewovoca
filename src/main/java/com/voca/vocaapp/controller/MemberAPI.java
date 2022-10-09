@@ -1,10 +1,10 @@
-package com.voca.app.vocaapp.controller;
+package com.voca.vocaapp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.voca.app.vocaapp.domain.MemberVO;
-import com.voca.app.vocaapp.service.MemberService;
+import com.voca.vocaapp.domain.MemberVO;
+import com.voca.vocaapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,8 +1,8 @@
-package com.voca.app.vocaapp.repository;
+package com.voca.vocaapp.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.voca.app.vocaapp.domain.MemberVO;
+import com.voca.vocaapp.domain.MemberVO;
 
 @Mapper
 public interface MemberMapper {

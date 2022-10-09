@@ -1,11 +1,11 @@
-package com.voca.app.vocaapp.repository;
+package com.voca.vocaapp.repository;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.voca.app.vocaapp.domain.SearchDTO;
-import com.voca.app.vocaapp.domain.VocaDTO;
+import com.voca.vocaapp.domain.SearchDTO;
+import com.voca.vocaapp.domain.VocaDTO;
 
 @Mapper
 public interface VocaMapper {
