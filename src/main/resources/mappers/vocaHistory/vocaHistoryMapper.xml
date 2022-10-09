@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.voca.app.vocaapp.repository.VocaHistoryMapper">
+    <insert id="insert" parameterType="vhvo">
+        insert into voca_history(mno, vno, hno, is_new)
+        values(#{mno}, #{vno}, #{hno}, #{isNew})
+    </insert>
+    <update id="updateCorrect" parameterType="vhvo">
+        update voca_history set correct = #{correct} where hno = #{hno} and vno = #{vno}
+    </update>
+</mapper>
