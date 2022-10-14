@@ -22,4 +22,7 @@
         from voca v join voca_history vh on v.vno = vh.vno
         where vh.hno = #{hno}
     </select>
+    <select id="selectMeanList" resultType="vvo">
+        select mean from voca
+    </select>
 </mapper>
