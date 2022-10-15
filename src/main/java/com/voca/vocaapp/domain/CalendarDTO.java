@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchDTO {
-    private int goal;
-    private int mno;
+public class CalendarDTO {
+    private long hno;
     private String date;
+    private boolean challenge;
 }

@@ -10,6 +10,9 @@
     <select id="selectHistoryFromHvo" parameterType="hvo" resultType="hvo">
         select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m-%d') = #{regAt}
     </select>
+    <select id="selectHistoryFromMonth" parameterType="sdto" resultType="cdto">
+        select hno, DATE_FORMAT(reg_at, '%Y-%m-%d') as date, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m') = #{date}
+    </select>
     <update id="updateChallenge" parameterType="hvo">
         update history set challenge = #{challenge} where hno = #{hno}
     </update>

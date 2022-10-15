@@ -13,5 +13,6 @@
         <typeAlias alias="hvo" type="com.voca.vocaapp.domain.HistoryVO"/>
         <typeAlias alias="vhvo" type="com.voca.vocaapp.domain.VocaHistoryVO"/>
         <typeAlias alias="sdto" type="com.voca.vocaapp.domain.SearchDTO"/>
+        <typeAlias alias="cdto" type="com.voca.vocaapp.domain.CalendarDTO"/>
     </typeAliases>
 </configuration>

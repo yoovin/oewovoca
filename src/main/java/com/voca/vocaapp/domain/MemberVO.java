@@ -17,4 +17,5 @@ public class MemberVO {
     private String lastLogin;
     private String regAt;
     private String modAt;
+    private char isRemoved;
 }

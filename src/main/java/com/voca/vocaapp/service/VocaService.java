@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.voca.vocaapp.domain.MarkDTO;
 import com.voca.vocaapp.domain.TodayDTO;
-import com.voca.vocaapp.domain.VocaVO;
 
 public interface VocaService {
     public TodayDTO getTodayList(int mno);

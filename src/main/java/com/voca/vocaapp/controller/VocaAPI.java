@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.voca.vocaapp.domain.MarkDTO;
 import com.voca.vocaapp.domain.TodayDTO;
-import com.voca.vocaapp.domain.VocaVO;
 import com.voca.vocaapp.service.VocaService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Slf4j
 @RestController
