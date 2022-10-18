@@ -34,6 +34,7 @@
 		C41C383128F189F200AF5899 /* BMHANNAAir_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84E7E99F3D0C4D428536CEE2 /* BMHANNAAir_ttf.ttf */; };
 		C41C383228F189F200AF5899 /* BMHANNAPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27E5D98B460141CBA2C02562 /* BMHANNAPro.ttf */; };
 		C41C383328F189F200AF5899 /* BMJUA_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19E28564BA1B45BB980CC370 /* BMJUA_ttf.ttf */; };
+		1F6362B3E6A243C2B3BAAB87 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DF56BB667E84385AC7A034D /* Rubik-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		E3CBECD16DB5472994F9DB99 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = ../assets/fonts/Entypo.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FD028E12246445A181F6285D /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../assets/fonts/Feather.ttf; sourceTree = "<group>"; };
+		4DF56BB667E84385AC7A034D /* Rubik-Regular.ttf */ = {isa = PBXFileReference; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				57D28D295EA24F118B8EDC85 /* Octicons.ttf */,
 				AFFEC01D63454D2281D2678A /* SimpleLineIcons.ttf */,
 				269528E935594BC9B4D63718 /* Zocial.ttf */,
+				4DF56BB667E84385AC7A034D /* Rubik-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				1C23E6AE672942A5B5E9CB17 /* Octicons.ttf in Resources */,
 				2909F4B5F02043FDB31492F7 /* SimpleLineIcons.ttf in Resources */,
 				BA8DD59F9A2F41A3BE5A448F /* Zocial.ttf in Resources */,
+				1F6362B3E6A243C2B3BAAB87 /* Rubik-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

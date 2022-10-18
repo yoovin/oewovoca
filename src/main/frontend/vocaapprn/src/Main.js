@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TouchableHighlight} from 'react-native'
 import {RFPercentage} from "react-native-responsive-fontsize"
-import { useRecoilState} from 'recoil'
-import { voca } from './atom'
+import { useRecoilState, useSetRecoilState} from 'recoil'
+import { voca, date, today } from './atom'
+import Icon from 'react-native-vector-icons/Ionicons'
+import Navi from './Navi'
 
 export default function Main({navigation}) {
     const [todayVoca, setTodayVoca] = useRecoilState(voca)
+    const [selectDate, setSelectDate] = useRecoilState(date)
+    const setToday = useSetRecoilState(today)
     const getData = {
         "hvo": {
             "hno": 8,
@@ -117,12 +121,28 @@ export default function Main({navigation}) {
         ]
     }
     useEffect(()=>{
+        if(selectDate == ''){ // 오늘 날짜 안받아왔었으면
+            const today = new Date()
+            const week = ['일', '월', '화', '수', '목', '금', '토']
+            setSelectDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()} [${week[today.getDay()]}]`)
+            setToday(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()} [${week[today.getDay()]}]`)
+        }
         setTodayVoca(getData.vocaList)
         // 서버에서 today voca데이터 가져와서 저장하기
     }, [])
 
+    const setting = <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate("Setting")}
+    >
+        <Icon name="ios-settings-outline" size={30} color='white'></Icon>
+    </TouchableOpacity>
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+    <Navi
+    right={setting}
+    ></Navi>
         <View style={styles.logoContainer}>
 
         </View>
@@ -144,7 +164,7 @@ export default function Main({navigation}) {
                 <Text style={styles.buttonText}>복습하기</Text>
             </TouchableOpacity>
         </View>
-    </SafeAreaView>
+    </View>
   )
 }
 

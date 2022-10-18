@@ -6,7 +6,7 @@ import Dialog from "react-native-dialog"
 import Icon from 'react-native-vector-icons/Ionicons'
 import Navi from './Navi'
 import { useRecoilValue } from 'recoil'
-import { voca } from './atom'
+import { voca, date } from './atom'
 
 export default function VocaToday({navigation}) {
     const [isModalVisible, setIsModalVisible] = useState(false) // 보이기 메뉴
@@ -14,6 +14,7 @@ export default function VocaToday({navigation}) {
     const [isMeanVisible, setIsMeanVisible] = useState(true) // 뜻 보이기
     const [isTestVisible, setIsTestVisible] = useState(false) // 시험 시작 dialog
     const todayVoca = useRecoilValue(voca) // main page에서 불러온 오늘의 단어 데이터
+    const selectDate = useRecoilValue(date)
 
     const menu = // 메뉴창
             <MenuView
@@ -46,13 +47,20 @@ export default function VocaToday({navigation}) {
                         <Icon name="ios-eye-off-outline" size={30} color='white'></Icon>
                     </TouchableOpacity>
             </MenuView>
+
+    const left = <TouchableOpacity
+    activeOpacity={0.8}
+    onPress={()=>navigation.pop()}
+    >
+        <Text style={styles.backButtonText}>{'   <'}</Text>
+    </TouchableOpacity>
     
     const hr = <View style={styles.hr}/> // hr라인
 
 
     return (
         <View style={styles.container}>
-            <Navi navigation={navigation} title="2022-10-08" right={menu}></Navi>
+            <Navi left={left} title={selectDate} right={menu} titleOnPress={() => navigation.navigate('HistoryCalendar')}></Navi>
             <SafeAreaView style={{flex: 1}}>
                 <View style={{flex: 8}}>
                     <ScrollView style={styles.vocaView}>
@@ -60,8 +68,8 @@ export default function VocaToday({navigation}) {
                             item.meanList.map((meanItem, meanIdx) => {
                                 return(
                                 <View>
-                                    <View style={styles.wordView}>
-                                        <Text style={[styles.wordText, {opacity: isWordVisible ? 1 : 0}]}>{meanIdx == 0 ? idx + 1 + ". " + item.origin : ""}</Text><Text style={[styles.meanText,{opacity: isMeanVisible ? 1 : 0}]}>{meanItem}</Text>
+                                    <View key={item.id} style={styles.wordView}>
+                                        <Text key={meanItem.id} style={[styles.wordText, {opacity: isWordVisible ? 1 : 0}]}>{meanIdx == 0 ? idx + 1 + ". " + item.origin : ""}</Text><Text key={item.id+meanItem.id} style={[styles.meanText,{opacity: isMeanVisible ? 1 : 0}]}>{meanItem}</Text>
                                     </View>
                                     {meanIdx == item.meanList.length -1 ? <View style={styles.hr}></View> :  <View></View>}
                                     {/* 마지막 단어인 경우 hr선을 그어 구분함 */}
@@ -83,7 +91,9 @@ export default function VocaToday({navigation}) {
             </SafeAreaView>
 
             <Dialog.Container visible={isTestVisible}>
-                <Dialog.Title>문제를 푸시겠습니까?</Dialog.Title>
+                <Dialog.Title>
+                    문제를 푸시겠습니까?
+                </Dialog.Title>
                 <Dialog.Button label="아니오" onPress={()=>setIsTestVisible(false)}></Dialog.Button>
                 <Dialog.Button label="예" onPress={() => navigation.reset({routes:[{name: 'VocaTest'}]})}></Dialog.Button>
             </Dialog.Container>
@@ -134,6 +144,11 @@ const styles = StyleSheet.create({
     },
     dotestText: {
         fontFamily: "BMJUA",
+        fontSize: RFPercentage(3),
+    },
+    backButtonText:{
+        fontFamily: 'BMJUA',
+        color: 'white',
         fontSize: RFPercentage(3),
     },
     hr: {

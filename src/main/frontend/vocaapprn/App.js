@@ -15,6 +15,8 @@ import Main from './src/Main'
 import Navi from './src/Navi'
 import VocaToday from './src/VocaToday'
 import VocaTest from './src/VocaTest'
+import Setting from './src/Setting'
+import HistoryCalendar from './src/HistoryCalendar'
 
 const Stack = createNativeStackNavigator()
 
@@ -31,6 +33,8 @@ const App = () => {
                         <Stack.Screen name="VocaTest" component={VocaTest}/>
                     </Stack.Group>
                     <Stack.Group screenOptions={{headerShown: false, presentation: 'modal'}}>
+                    <Stack.Screen name="Setting" component={Setting}/>
+                    <Stack.Screen name="HistoryCalendar" component={HistoryCalendar}/>
                     </Stack.Group>
                 </Stack.Navigator>
             </NavigationContainer>
