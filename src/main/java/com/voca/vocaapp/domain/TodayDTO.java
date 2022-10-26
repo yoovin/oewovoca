@@ -1,4 +1,6 @@
-package com.voca.app.vocaapp.domain;
+package com.voca.vocaapp.domain;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchDTO {
-    private int goal;
-    private int mno;
+public class TodayDTO {
+    private HistoryVO hvo;
+    private List<TodayVocaDTO> vocaList;
 }

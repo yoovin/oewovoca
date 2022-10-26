@@ -1,4 +1,4 @@
-package com.voca.app.vocaapp.domain;
+package com.voca.vocaapp.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,4 +17,5 @@ public class MemberVO {
     private String lastLogin;
     private String regAt;
     private String modAt;
+    private char isRemoved;
 }

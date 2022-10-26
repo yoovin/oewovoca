@@ -1,4 +1,4 @@
-package com.voca.app.vocaapp.config;
+package com.voca.vocaapp.config;
 
 import javax.sql.DataSource;
 

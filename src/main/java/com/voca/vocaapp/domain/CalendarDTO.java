@@ -1,20 +1,16 @@
-package com.voca.app.vocaapp.domain;
-
-import java.util.List;
+package com.voca.vocaapp.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class MarkDTO {
+public class CalendarDTO {
     private long hno;
-    private List<Long> correctList;
-    private List<Long> wrongList;
+    private String date;
+    private boolean challenge;
 }
