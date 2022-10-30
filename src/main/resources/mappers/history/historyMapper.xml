@@ -7,8 +7,8 @@
     <select id="selectTodayFromMno" parameterType="int" resultType="hvo">
         select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, goal, challenge from history where mno = #{mno} and DATE_FORMAT(now(), '%Y-%m-%d') = DATE_FORMAT(reg_at, '%Y-%m-%d')
     </select>
-    <select id="selectOneFromHno" parameterType="int" resultType="hvo">
-        select * from where hno = #{hno}
+    <select id="selectOneFromHno" parameterType="long" resultType="hvo">
+        select * from history where hno = #{hno}
     </select>
     <select id="selectHistoryFromHvo" parameterType="hvo" resultType="hvo">
         select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, goal, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m-%d') = #{regAt}

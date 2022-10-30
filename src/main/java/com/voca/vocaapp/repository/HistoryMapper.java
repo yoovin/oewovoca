@@ -13,7 +13,7 @@ import com.voca.vocaapp.domain.SearchDTO;
 public interface HistoryMapper {
     public int insertToday(MemberVO mvo);
     public HistoryVO selectTodayFromMno(int mno);
-    public HistoryVO selectOneFromHno(long hvo);
+    public HistoryVO selectOneFromHno(long hno);
     public HistoryVO selectHistoryFromHvo(HistoryVO hvo);
     public List<CalendarDTO> selectHistoryFromMonth(SearchDTO sdto);
     public int updateChallenge(HistoryVO hvo);
