@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.voca.vocaapp.repository.HistoryMapper">
-    <insert id="insertToday" parameterType="int">
-        insert into history(mno) values(#{mno})
+    <insert id="insertToday" parameterType="mvo">
+        insert into history(mno, goal) values(#{mno}, #{goal})
     </insert>
     <select id="selectTodayFromMno" parameterType="int" resultType="hvo">
-        select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, challenge from history where mno = #{mno} and DATE_FORMAT(now(), '%Y-%m-%d') = DATE_FORMAT(reg_at, '%Y-%m-%d')
+        select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, goal, challenge from history where mno = #{mno} and DATE_FORMAT(now(), '%Y-%m-%d') = DATE_FORMAT(reg_at, '%Y-%m-%d')
+    </select>
+    <select id="selectOneFromHno" parameterType="int" resultType="hvo">
+        select * from where hno = #{hno}
     </select>
     <select id="selectHistoryFromHvo" parameterType="hvo" resultType="hvo">
-        select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m-%d') = #{regAt}
+        select hno, mno, DATE_FORMAT(reg_at, '%Y-%m-%d') as reg_at, correct, goal, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m-%d') = #{regAt}
     </select>
     <select id="selectHistoryFromMonth" parameterType="sdto" resultType="cdto">
-        select hno, DATE_FORMAT(reg_at, '%Y-%m-%d') as date, challenge from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m') = #{date}
+        select hno, DATE_FORMAT(reg_at, '%Y-%m-%d') as date, challenge, correct, goal
+        from history where mno = #{mno} and DATE_FORMAT(reg_at, '%Y-%m') = #{date}
     </select>
     <update id="updateChallenge" parameterType="hvo">
-        update history set challenge = #{challenge} where hno = #{hno}
+        update history set challenge = #{challenge}, correct = #{correct} where hno = #{hno}
     </update>
 </mapper>

@@ -199,3 +199,4 @@ package-lock.json
 
 #properties
 application-dev.properties
+application-real.properties

@@ -45,7 +45,7 @@ public class VocaServiceImpl implements VocaService {
         HistoryVO hvo = historyMapper.selectTodayFromMno(mno);
         if (hvo == null) {
             MemberVO mvo = memberMapper.selectOneFromMno(mno);
-            int isUp = historyMapper.insertToday(mno);
+            int isUp = historyMapper.insertToday(mvo);
             if (isUp > 0) {
                 hvo = historyMapper.selectTodayFromMno(mno);
                 SearchDTO sdto = new SearchDTO();
@@ -89,7 +89,11 @@ public class VocaServiceImpl implements VocaService {
     @Override
     @Transactional
     public int marking(MarkDTO mdto) {
-        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), true));
+        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), mdto.getCorrectList().size(), true));
+        HistoryVO hvo = historyMapper.selectOneFromHno(mdto.getHno());
+        if (isUp > 0 && !hvo.isChallenge()) {
+            memberMapper.updateChainFromMno(hvo.getMno());
+        }
         for (long vno : mdto.getCorrectList()) {
             if (isUp > 0) {
                 isUp *= vocaHistoryMapper.updateCorrect(new VocaHistoryVO(mdto.getHno(), vno, true));
