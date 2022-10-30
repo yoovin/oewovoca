@@ -2,22 +2,25 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native'
 import {RFPercentage} from "react-native-responsive-fontsize"
 import React from 'react'
 
-export default function Navi({navigation, title, right}) {
+export default function Navi({left, title, right, titleOnPress}) {
     return (
         <View style={styles.navi}>
             <View style={styles.viewContainer}></View>
             <View style={styles.contentContainer}>
-                <TouchableOpacity 
-                style={styles.backButton}
-                activeOpacity={0.8}
-                onPress={()=>navigation.pop()}
-                >
-                    <Text style={styles.titleText}>{'   <'}</Text>
-                </TouchableOpacity>
-
-                <View style={styles.titleView}>
-                    <Text style={styles.titleText}>{title}</Text>
+                <View style={styles.leftView}>
+                    {left}
                 </View>
+                {titleOnPress ? 
+                <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={titleOnPress}
+                style={styles.titleView}>
+                    <Text style={styles.titleText}>{title}</Text>
+                </TouchableOpacity>
+                :<View style={styles.titleView}>
+                    <Text style={styles.titleText}>{title}</Text>
+                </View>}
+                
 
                 <View style={styles.rightView}>
                     {right}
@@ -35,11 +38,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection:'row'
     },
-    backButton:{
+    leftView:{
         flex:1
     },
     titleView: {
-        flex: 6,
+        flex: 4.5,
         alignItems:'center',
     },
     titleText: {
@@ -55,9 +58,4 @@ const styles = StyleSheet.create({
         height: '10%',
         backgroundColor: '#FF7800'
     },
-    backButtonText:{
-        fontFamily: 'BMJUA',
-        color: 'white',
-        fontSize: RFPercentage(3),
-    }
 })

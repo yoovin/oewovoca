@@ -13,8 +13,11 @@ import { RecoilRoot } from 'recoil'
 import Login from './src/Login'
 import Main from './src/Main'
 import Navi from './src/Navi'
-import VocaToday from './src/VocaToday'
+import VocaLearn from './src/VocaLearn'
 import VocaTest from './src/VocaTest'
+import Setting from './src/Setting'
+import HistoryCalendar from './src/HistoryCalendar'
+import VocaResult from './src/VocaResult'
 
 const Stack = createNativeStackNavigator()
 
@@ -27,10 +30,13 @@ const App = () => {
                         <Stack.Screen name="navi" component={Navi}/>
                         <Stack.Screen name="Login" component={Login}/>
                         <Stack.Screen name="Main" component={Main}/>
-                        <Stack.Screen name="VocaToday" component={VocaToday}/>
+                        <Stack.Screen name="VocaLearn" component={VocaLearn}/>
                         <Stack.Screen name="VocaTest" component={VocaTest}/>
+                        <Stack.Screen name="HistoryCalendar" component={HistoryCalendar}/>
+                        <Stack.Screen name="VocaResult" component={VocaResult}/>
                     </Stack.Group>
                     <Stack.Group screenOptions={{headerShown: false, presentation: 'modal'}}>
+                    <Stack.Screen name="Setting" component={Setting}/>
                     </Stack.Group>
                 </Stack.Navigator>
             </NavigationContainer>
