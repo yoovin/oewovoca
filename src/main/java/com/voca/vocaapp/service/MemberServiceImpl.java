@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<CalendarDTO> getCalendar(int mno, int year, int month) {
+    public List<CalendarDTO> getCalendar(int mno, String year, String month) {
         SearchDTO sdto = new SearchDTO();
         sdto.setMno(mno);
         sdto.setDate(year + "-" + month);

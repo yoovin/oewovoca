@@ -8,7 +8,7 @@ import com.voca.vocaapp.domain.MemberVO;
 public interface MemberService {
     public int register(MemberVO mvo);
     public MemberVO login(MemberVO mvo);
-    public List<CalendarDTO> getCalendar(int mno, int year, int month);
+    public List<CalendarDTO> getCalendar(int mno, String year, String month);
     public int modify(MemberVO mvo);
     public int remove(int mno);
 }
