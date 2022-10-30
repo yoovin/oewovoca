@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.voca.app.vocaapp.repository.VocaMapper">
+<mapper namespace="com.voca.vocaapp.repository.VocaMapper">
     <select id="selectVocaHistoryList" parameterType="sdto" resultType="vdto">
         select v.vno, v.origin, v.mean from voca v join (
             select vno, vhno from voca_history vh
@@ -21,5 +21,8 @@
         select v.vno, v.origin, v.mean, vh.is_new, vh.correct
         from voca v join voca_history vh on v.vno = vh.vno
         where vh.hno = #{hno}
+    </select>
+    <select id="selectMeanList" resultType="vvo">
+        select mean from voca
     </select>
 </mapper>
