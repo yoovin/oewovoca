@@ -13,18 +13,30 @@ import {RFPercentage} from "react-native-responsive-fontsize"
 import React, { useEffect, useState } from 'react'
 import Dialog from "react-native-dialog"
 import Navi from './Navi'
-import {means} from './means.json' // 단어검색엔진을 위한 뜻들
-import { voca } from './atom' // 단어 아톰
-import { useRecoilValue } from 'recoil'
+import { voca, vocaresult } from './atom' // 단어 아톰
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import axios from 'axios'
+import {ENV_BACKSERVER} from '@env'
 
-export default function VocaTest() {
+/*
+    1. 단어섞기
+    2. 유저가 시험봄
+    3. 단어 채점
+*/
+
+
+export default function VocaTest({navigation}) {
     const [isTestSubmit, setIsTestSubmit] = useState(false)
     const [problemNum, setProblemNum] = useState(0)
     const [inputText, setInputText] = useState("")
     const [searchMean, setSearchMean] = useState([])
     const [answers, setAnswers] = useState([])
     const vocas = useRecoilValue(voca)
+    const setVocaresult = useSetRecoilState(vocaresult)
+    const [shuffledvoca, setShuffledvoca] = useState(false)
     const [anpun, setAnpun] = useState(true)
+    const [constructorHasRun, setConstructorHasRun] = useState(false)
+    const [means, setMeans] = useState([])
 
     const korSeparater = (char) => {
         const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
@@ -101,6 +113,27 @@ export default function VocaTest() {
         return searchArr;
     }
 
+    const constructor = () =>{
+        if(constructorHasRun) return
+
+        /* 단어 뜻 가져오기 */
+        axios.get(`${ENV_BACKSERVER}voca/means`)
+        .then(res => {
+            setMeans(res.data)
+        })
+        
+
+
+        /* 단어 순서 섞어주기 */
+        let shuffled = Array.from(vocas)
+        shuffled.sort(() => Math.random() - 0.5)
+        setShuffledvoca(shuffled)
+        console.log(shuffledvoca)
+
+        setConstructorHasRun(true)
+    }
+    constructor()
+
     useEffect(() => {
         const blank = []
         for(let i = 0; i < vocas.length; i++){ // 정답 빈칸으로 만들어둠
@@ -125,6 +158,7 @@ export default function VocaTest() {
                     break
                 }
             }
+            console.log(answers)
             setIsTestSubmit(true)
             }}>제출하기</Text>
     </TouchableOpacity>
@@ -150,6 +184,23 @@ export default function VocaTest() {
         inputHandler(text)
     }
 
+    const handleGrade = () => {
+        // 단어 채점
+        let cvnoList = []
+
+        shuffledvoca.map((item, idx) => {
+            // 채점기능 짜세요
+            if(item.meanList.includes(answers[idx])){
+                // 정답
+                cvnoList.push({vno: item.vno, isCorrect: true, userAnswer: answers[idx]})
+            }else{
+                cvnoList.push({vno: item.vno, isCorrect: false, userAnswer: answers[idx]})
+            }
+        })
+        console.log(cvnoList)
+        setVocaresult(cvnoList)
+    }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView style={styles.container} behavior='height'>
@@ -163,7 +214,8 @@ export default function VocaTest() {
                         </View>
                         <View style={styles.wordView}>
                             {/* 단어 들어가는곳 */}
-                            <Text style={styles.wordText}>{vocas[problemNum].origin}</Text>
+                            <Text style={styles.wordText}>{shuffledvoca&& shuffledvoca[problemNum].origin}</Text>
+                            {/* <Text style={styles.wordText}>{sf && sf[problemNum].origin}</Text> */}
                         </View>
                         <View style={{flex: 4}}>
                             {/* input 들어가는곳 */}
@@ -192,8 +244,7 @@ export default function VocaTest() {
                                 return(
                                     <TouchableOpacity
                                     style={blockStyle}
-                                    onPress={() => {answerBlockHandler(item)
-                                    console.log(item.length)}}
+                                    onPress={() => {answerBlockHandler(item)}}
                                     >
                                         <Text style={textStyle}>{item}</Text>
                                     </TouchableOpacity>
@@ -207,7 +258,7 @@ export default function VocaTest() {
                     <View style={{flex:0.3, flexDirection: 'row'}}>
                         {/* 화살표 들어가는곳 */}
                         <View style={{flex:1}}>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                             activeOpacity={0.8}
                             style={styles.arrowButton}
                             onPress={() => problemNumHandler(-1)}
@@ -227,13 +278,15 @@ export default function VocaTest() {
                     <Dialog.Title>답안을 제출할까요?</Dialog.Title>
                     {anpun && <Dialog.Description>
                         안푼문제 [ {answers.map((item, idx) => (
-                            item == "" &&
-                            idx == answers.length-1 ? `${idx+1}번`: `${idx+1}번, `
+                            item == "" && (idx == answers.length-1 ? `${idx+1}번`: `${idx+1}번, `)
                         ))} ]
                     </Dialog.Description>}
                     
                     <Dialog.Button label="아니오" onPress={()=>setIsTestSubmit(false)}></Dialog.Button>
-                    <Dialog.Button label="예" onPress={() => {}}></Dialog.Button>
+                    <Dialog.Button label="예" onPress={() => {
+                        handleGrade()
+                        navigation.reset({routes:[{name: 'VocaResult'}]})
+                        }}></Dialog.Button>
                 </Dialog.Container>
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>

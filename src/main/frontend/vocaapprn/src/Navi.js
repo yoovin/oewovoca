@@ -14,7 +14,7 @@ export default function Navi({left, title, right, titleOnPress}) {
                 <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={titleOnPress}
-                 style={styles.titleView}>
+                style={styles.titleView}>
                     <Text style={styles.titleText}>{title}</Text>
                 </TouchableOpacity>
                 :<View style={styles.titleView}>
