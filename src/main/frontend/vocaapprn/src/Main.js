@@ -7,7 +7,6 @@ import { useRecoilState, useSetRecoilState} from 'recoil'
 import { date, today, userid, mno, chain, goal } from './atom'
 import 'react-native-get-random-values'
 import {v4} from 'uuid'
-import Icon from 'react-native-vector-icons/Ionicons'
 import Navi from './Navi'
 import {ENV_BACKSERVER} from '@env'
 
@@ -15,7 +14,6 @@ import {ENV_BACKSERVER} from '@env'
     main 컴포넌트
     1. 유저의 id값을 가져옴
     2. selectDate 오늘날짜로 만듦 => 복습하기는 그때 바꿔짐
-
 */
 
 export default function Main({navigation}) {
@@ -43,17 +41,19 @@ export default function Main({navigation}) {
             if(currentUserid !== null){
                 setUserId(currentUserid)
             }else{
+                navigation.navigate("Menual")
                 const createdUserid = v4()
-                storeAsync('userid', createdUserid)
-                axios.post(ENV_BACKSERVER + "member/",{"email": createdUserid, "nick": "default"})
+                await storeAsync('userid', createdUserid)
+                await axios.post(ENV_BACKSERVER + "member/",{"email": createdUserid, "nick": "default"})
                 .then(res =>{
-                    if(res == 1){
+                    if(res.data == 1){
                         console.log("회원가입 완료")
+                        setUserId(createdUserid)
                     }else{
                         console.log("회원가입 실패")
                     }
                 })
-                .catch(e => console.log(e))
+                .catch(e => console.error(e))
             }
         }catch(e){
             console.error(e)
@@ -62,7 +62,7 @@ export default function Main({navigation}) {
 
     const getToday = () => {
         const newDate = new Date()
-        return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+        return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()  < 10 && '0' + newDate.getDate()}`
     }
 
     const constructor = async() =>{
@@ -94,13 +94,22 @@ export default function Main({navigation}) {
     useEffect(()=>{
     }, [])
 
+    const menual = <TouchableOpacity
+    activeOpacity={0.8}
+    onPress={() => navigation.navigate("Menual")}
+    >
+    <Text style={[styles.buttonText, {fontSize: RFPercentage(2)}]}>사용방법</Text>
+    </TouchableOpacity>
+
     return (
     <View style={styles.container}>
-    <Navi></Navi>
-        <View style={styles.logoContainer}>
-            <Text>안녕하세요 용사님</Text>
-            <Text>오늘도 단어를 외워보아요</Text>
-            <Text>{todayChain}일째 도전중!</Text>
+    <Navi right={menual}></Navi>
+        {/* <View style={styles.logoContainer}>
+        </View> */}
+        <View style={{flex: 1.5, padding: 30, justifyContent:'center'}}>
+            <Text style={styles.mainText}>안녕하세요</Text>
+            <Text style={styles.mainText}>오늘도 단어를 외워보아요</Text>
+            <Text style={styles.mainText}><Text style={{color:'red', fontSize:RFPercentage(7)}}>{todayChain}</Text>일째 도전중!</Text>
         </View>
         <View style={styles.buttonContainer}>
             <TouchableHighlight 
@@ -136,11 +145,16 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         flex: 1,
-        padding: 30,
+    },
+    mainText: {
+        fontSize: RFPercentage(4.5),
+        color: 'black',
+        fontFamily: 'BMJUA',
+        marginVertical: 5,
     },
 
     buttonContainer: {
-        flex: 1,
+        flex: 2,
         left: '25%',
         width: '50%',
         flexDirection: 'column',

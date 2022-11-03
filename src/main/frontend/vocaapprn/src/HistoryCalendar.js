@@ -144,7 +144,8 @@ export default function HistoryCalendar({navigation}) {
             />
             <View style={{flex:3, padding: '5%'}}>
                 <View>
-                    <Text style={styles.dateText}>{`${currentDate} ${day&&day+'요일'}`}</Text>
+                    <Text style={[styles.dateText, {marginBottom: 10}]}>{`${currentDate} ${day&&day+'요일'}`}</Text>
+                    <View style={styles.hr}/>
                     {data[currentDate] ? 
                     <View>
                         <Text style={styles.dateText}>문제 개수: {data[currentDate].goal}</Text>
@@ -168,7 +169,7 @@ export default function HistoryCalendar({navigation}) {
                 </TouchableOpacity>:
                 <View 
                 style={[styles.dotestButton, {backgroundColor: '#dcdcdc'}]}>
-                    <Text style={styles.dotestText}>다시 외우기</Text>
+                    <Text style={[styles.dotestText, {color:'gray'}]}>다시 외우기</Text>
                 </View>
                     }
                     
@@ -184,20 +185,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: RFPercentage(3),
     },
-
-    dateView: {
-
-    },
-
+    
     dateText: {
         fontFamily: 'BMJUA',
         color: 'black',
         fontSize: RFPercentage(3),
     },
 
-    progressText: {
-
-    },
     dotestButton: {
         top:'10%',
         left: '25%',
@@ -213,4 +207,11 @@ const styles = StyleSheet.create({
         fontFamily: "BMJUA",
         fontSize: RFPercentage(3),
     },
+
+    hr: {
+        // marginTop: 10,
+        marginBottom: 10,
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+    }
 })
