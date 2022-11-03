@@ -1,11 +1,14 @@
-package com.voca.app.vocaapp.service;
+package com.voca.vocaapp.service;
 
-import com.voca.app.vocaapp.domain.MarkDTO;
-import com.voca.app.vocaapp.domain.TodayDTO;
+import java.util.List;
+
+import com.voca.vocaapp.domain.MarkDTO;
+import com.voca.vocaapp.domain.TodayDTO;
 
 public interface VocaService {
     public TodayDTO getTodayList(int mno);
     public int marking(MarkDTO mdto);
     public TodayDTO getHistoryList(int mno, String regAt);
+    public List<String> getMeans();
     
 }

@@ -1,4 +1,4 @@
-package com.voca.app.vocaapp.domain;
+package com.voca.vocaapp.domain;
 
 import java.util.List;
 

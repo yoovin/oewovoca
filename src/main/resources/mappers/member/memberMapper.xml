@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.voca.app.vocaapp.repository.MemberMapper">
+<mapper namespace="com.voca.vocaapp.repository.MemberMapper">
+    <insert id="insert" parameterType="mvo">
+        insert into member(email, nick) values(#{email}, #{nick})
+    </insert>
     <select id="login" parameterType="mvo" resultType="mvo">
-        select * from member where email = #{email}
+        select * from member where email = #{email} and is_removed = 'N'
     </select>
     <select id="selectOneFromMno" parameterType="int" resultType="mvo">
-        select * from member where mno = #{mno}
+        select * from member where mno = #{mno} is_removed = 'N'
     </select>
     <update id="lastLogin" parameterType="String">
         update member set last_login = now() where email = #{email}
+    </update>
+    <update id="updateMemberFromMno" parameterType="mvo">
+        update member set nick = #{nick}, goal = #{goal} where mno = #{mno} and is_removed = 'N'
+    </update>
+    <update id="deleteFromMno" parameterType="int">
+        update member set is_removed = 'Y' where mno = #{mno} and is_removed = 'N'
     </update>
 </mapper>

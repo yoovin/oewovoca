@@ -1,26 +1,28 @@
-package com.voca.app.vocaapp.service;
+package com.voca.vocaapp.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.voca.app.vocaapp.domain.TodayDTO;
-import com.voca.app.vocaapp.domain.HistoryVO;
-import com.voca.app.vocaapp.domain.MarkDTO;
-import com.voca.app.vocaapp.domain.MemberVO;
-import com.voca.app.vocaapp.domain.SearchDTO;
-import com.voca.app.vocaapp.domain.TodayVocaDTO;
-import com.voca.app.vocaapp.domain.VocaDTO;
-import com.voca.app.vocaapp.domain.VocaHistoryVO;
-import com.voca.app.vocaapp.repository.HistoryMapper;
-import com.voca.app.vocaapp.repository.MemberMapper;
-import com.voca.app.vocaapp.repository.VocaHistoryMapper;
-import com.voca.app.vocaapp.repository.VocaMapper;
+import com.voca.vocaapp.domain.TodayDTO;
+import com.voca.vocaapp.domain.HistoryVO;
+import com.voca.vocaapp.domain.MarkDTO;
+import com.voca.vocaapp.domain.MemberVO;
+import com.voca.vocaapp.domain.SearchDTO;
+import com.voca.vocaapp.domain.TodayVocaDTO;
+import com.voca.vocaapp.domain.VocaDTO;
+import com.voca.vocaapp.domain.VocaHistoryVO;
+import com.voca.vocaapp.domain.VocaVO;
+import com.voca.vocaapp.repository.HistoryMapper;
+import com.voca.vocaapp.repository.MemberMapper;
+import com.voca.vocaapp.repository.VocaHistoryMapper;
+import com.voca.vocaapp.repository.VocaMapper;
 
 @Service
 public class VocaServiceImpl implements VocaService {
@@ -114,5 +116,18 @@ public class VocaServiceImpl implements VocaService {
             vocadtoList.add(new TodayVocaDTO(vdto, meanList));
         }
         return vocadtoList;
+    }
+
+    @Override
+    public List<String> getMeans() {
+        List<VocaVO> vvoList = vocaMapper.selectMeanList();
+        List<String> meanList = new ArrayList<>();
+        for (VocaVO vvo : vvoList) {
+            StringTokenizer stz = new StringTokenizer(vvo.getMean(), "//");
+            while (stz.hasMoreTokens()) {
+                meanList.add(stz.nextToken());
+            }
+        }
+        return meanList.stream().distinct().collect(Collectors.toList());
     }
 }
