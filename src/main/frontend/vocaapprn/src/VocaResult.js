@@ -36,12 +36,14 @@ export default function VocaResult({navigation}) {
     useEffect(() => {
         // 채점된거 보냄
         sendGrade((cList, wList) => {
-            console.log(cList, wList)
+            console.log(cList, wList, Hno)
             axios.put(`${ENV_BACKSERVER}voca/today/${Hno}`,{
                 "hno": Hno,
                 correctList: cList,
                 wrongList: wList
-            })   
+            })
+            .then(res => console.log(res))
+            .catch(e => console.error)
         })
     }, [])
     
@@ -63,7 +65,6 @@ export default function VocaResult({navigation}) {
                             vocaResult.map(resultItem => {
                                 if(resultItem.vno == item.vno) result = resultItem
                             })
-                            console.log(result)
                             return(
                                 item.meanList.map((meanItem, meanIdx) => (
                                     <View>

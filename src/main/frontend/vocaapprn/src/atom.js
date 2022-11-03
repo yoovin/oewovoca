@@ -19,12 +19,12 @@ export const userid = atom({
 
 export const chain = atom({
     key: 'chain',
-    default:''
+    default: 0
 })
 
 export const goal = atom({
     key: 'goal',
-    default:0
+    default: 0
 })
 
 export const mno = atom({

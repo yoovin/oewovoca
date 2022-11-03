@@ -1,68 +1,116 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {RFPercentage} from "react-native-responsive-fontsize"
-import {useRecoilState} from 'recoil'
-import {goal, userid} from './atom'
-import React, { useEffect } from 'react'
+import {useRecoilState, useRecoilValue} from 'recoil'
+import {goal, userid, mno} from './atom'
+import React, { useEffect, useState } from 'react'
+import Navi from './Navi'
+import Toast from 'react-native-toast-message'
+import axios from 'axios'
+import {ENV_BACKSERVER} from '@env'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Setting() {
+export default function Setting({navigation}) {
     const [userId, setUserId] = useRecoilState(userid)
     const [currentGoal, setCurrentGoal] = useRecoilState(goal)
+    const Mno = useRecoilValue(mno)
+    const [isChanged, setIsChanged] = useState(false)
+    const [changeGoal, setChangeGoal] = useState(currentGoal)
+
+    const left = <TouchableOpacity
+    activeOpacity={0.8}
+    onPress={()=>navigation.pop()}
+    >
+        <Text style={styles.backButtonText}>{'   <'}</Text>
+    </TouchableOpacity>
 
     const goalHandler = (num) => {
-        setCurrentGoal(state => state + num)
+        if(changeGoal + num < 10 || changeGoal + num > 50) return
+        setIsChanged(true)
+        setChangeGoal(state => state + num)
     }
 
-    useEffect(() => {
-        console.log("설정 생겼당")
-        return () => {
-            console.log("설정 없어졌당")
-        }
-    }, [])
+    const submitHandler = () => {
+        axios.put(`${ENV_BACKSERVER}member/${Mno}`, {
+            mno: Mno,
+            nick: "Default",
+            goal: changeGoal
+        })
+        .then(res =>{
+            if(res.data == 1){
+                setCurrentGoal(state => changeGoal)
+                setIsChanged(false)
+                Toast.show({
+                    type: 'success',
+                    text1: '저장되었습니다'
+                })
+            }else{
+                Toast.show({
+                    type: 'error',
+                    text1: '에러가 발생했습니다'
+                })
+            }
+        })
+        .catch(e => {
+            Toast.show({
+                type: 'error',
+                text1: '에러가 발생했습니다'
+            })
+            setCurrentGoal(originalValue)
+            console.error(e)
+        })
+    }
 
-  return (
-    <View style={{flex: 1, backgroundColor: '#FFC499', alignItems: 'center'}}>
-        <View style={[styles.center, {flex:1}]}>
-            <Text style={styles.mainText}>설정</Text>
-        </View>
-        <View style={styles.hr}></View>
-        <View style={[{flex:3, alignItems: 'center'}]}>
-            <Text style={styles.subText}>ID</Text>
-            <TouchableOpacity
-            activeOpacity={0.8}
-            style={[styles.itemBox, styles.center]}
-            >
-                <Text style={styles.itemText}>{userId}</Text>
-            </TouchableOpacity>
-        </View>
+    return (
+        <View style={{flex: 1, backgroundColor: '#FFC499', alignItems: 'center'}}>
+            <Navi left={left} title="설정"></Navi>
+            {/* <View style={[styles.center, {flex:1}]}>
+                <Text style={styles.mainText}>설정</Text>
+            </View> */}
+            {/* <View style={styles.hr}></View> */}
+            <View style={[{flex:3, alignItems: 'center'}]}>
+                <Text style={styles.subText}>ID</Text>
+                <TouchableOpacity
+                activeOpacity={0.8}
+                style={[styles.itemBox, styles.center]}
+                onPress={()=> AsyncStorage.clear()}
+                >
+                    <Text style={styles.itemText}>{userId}</Text>
+                </TouchableOpacity>
+            </View>
 
-        <Text style={styles.subText}>하루에 외울 단어 수</Text>
-            <View style={{flex: 3, flexDirection: 'row'}}>
+            <Text style={styles.subText}>하루에 외울 단어 수</Text>
+            <View style={{flex: 4, flexDirection: 'row'}}>
                 <View style={{flex: 1}}>
-                    <TouchableOpacity style={{width: '30%', left:'60%', alignItems: 'center'}}>
-                        <Text style={styles.mainText} onPress={() => goalHandler(-5)}>{'<'}</Text>
+                    <TouchableOpacity style={{width: '30%', left:'60%', alignItems: 'center'}} onPress={() => goalHandler(-5)}>
+                        <Text style={styles.mainText}>{'<'}</Text>
                         <Text style={styles.itemText}>-5</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.vocanumBox, styles.center, {flex: 1}]}>
-                    <Text style={styles.itemText}>{currentGoal}개</Text>
+                    <Text style={styles.itemText}>{changeGoal}개</Text>
                 </View>
                 <View style={{flex: 1}}>
-                    <TouchableOpacity style={{width: '30%', left:'10%', alignItems: 'center'}}>
-                        <Text style={styles.mainText} onPress={() => goalHandler(5)}>{'>'}</Text>
+                    <TouchableOpacity style={{width: '30%', left:'10%', alignItems: 'center'}} onPress={() => goalHandler(5)}>
+                        <Text style={styles.mainText}>{'>'}</Text>
                         <Text style={styles.itemText}>+5</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={{flex:1}}>
-                    <TouchableOpacity 
+                {isChanged ?
+                <TouchableOpacity 
                     style={styles.dotestButton} 
                     activeOpacity={0.8}
-                    onPress={() => {}}>
+                    onPress={submitHandler}>
                         <Text style={styles.dotestText}>저장하기</Text>
                     </TouchableOpacity>
-                </View>
-    </View>
-  )
+                    :<View style={[styles.dotestButton, {backgroundColor:'#dcdcdc'}]}>
+                        <Text style={[styles.dotestText, {color:'#aaaaaa'}]}>저장하기</Text>
+                    </View>
+                    }
+            </View>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -125,6 +173,12 @@ const styles = StyleSheet.create({
     },
     dotestText: {
         fontFamily: "BMJUA",
+        fontSize: RFPercentage(5),
+    },
+
+    backButtonText:{
+        fontFamily: 'BMJUA',
+        color: 'white',
         fontSize: RFPercentage(3),
     },
 })

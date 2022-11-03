@@ -1,5 +1,5 @@
 import React, {useEffect, useState}from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Button, ScrollView, Modal, Dimensions, TouchableHighlight} from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Button, ScrollView, Modal, Dimensions, TouchableHighlight, ActivityIndicator} from 'react-native'
 import axios from 'axios'
 import {RFPercentage} from "react-native-responsive-fontsize"
 import { MenuView } from '@react-native-menu/menu'
@@ -27,6 +27,7 @@ export default function VocaLearn({navigation}) {
 
     useEffect(() => {
         // 대충 어쩌구 자료 가져옴
+        console.log(Mno, selectDate)
         axios.get(`${ENV_BACKSERVER}voca/today/${Mno}/${selectDate}`)
         .then(res => {
             setHno(res.data.hvo.hno)
@@ -77,9 +78,6 @@ export default function VocaLearn({navigation}) {
     >
         <Text style={styles.backButtonText}>{'   <'}</Text>
     </TouchableOpacity>
-    
-    const hr = <View style={styles.hr}/> // hr라인
-
 
     return (
         <View style={styles.container}>
@@ -99,8 +97,7 @@ export default function VocaLearn({navigation}) {
                                 </View>
                                 )
                             })
-                        )):<Text>''</Text>} 
-                        {/* 여기 인디케이터 넣어주기 */}
+                        )):<ActivityIndicator/>} 
                     </ScrollView>
                 </View>
                 
