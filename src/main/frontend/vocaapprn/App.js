@@ -8,7 +8,7 @@
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 import Main from './src/Main'
 import Navi from './src/Navi'
@@ -19,10 +19,22 @@ import HistoryCalendar from './src/HistoryCalendar'
 import VocaResult from './src/VocaResult'
 import Menual from './src/Menual'
 import Toast from 'react-native-toast-message'
+import SplashScreen from 'react-native-splash-screen'
 
 const Stack = createNativeStackNavigator()
 
 const App = () => {
+    useEffect(() => {
+        try {
+          setTimeout(() => {
+            SplashScreen.hide(); /** 추가 **/
+          }, 2000); /** 스플래시 시간 조절 (2초) **/
+        } catch(e) {
+          console.warn('에러발생');
+          console.warn(e);
+        }
+      });
+
     return(
         <RecoilRoot>
             <NavigationContainer>
