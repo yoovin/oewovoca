@@ -5,8 +5,8 @@
         select v.vno, v.origin, v.mean from voca v join (
             select vno, vhno from voca_history vh
             where mno = #{mno}
-            order by rand()
-        ) vh on v.vno = vh.vno limit #{goal}
+        ) vh on v.vno = vh.vno
+        order by rand() limit #{goal}
     </select>
     <select id="selectRandList" parameterType="sdto" resultType="vdto">
         select v2.vno, v2.origin, v2.mean from (

@@ -1,5 +1,7 @@
 package com.voca.vocaapp.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -89,9 +91,11 @@ public class VocaServiceImpl implements VocaService {
     @Override
     @Transactional
     public int marking(MarkDTO mdto) {
-        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), mdto.getCorrectList().size(), true));
         HistoryVO hvo = historyMapper.selectOneFromHno(mdto.getHno());
-        if (isUp > 0 && !hvo.isChallenge()) {
+        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), mdto.getCorrectList().size(), true));
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (isUp > 0 && hvo != null && !hvo.isChallenge() && today.format(df).equals(hvo.getRegAt().substring(0, 10))) {
             memberMapper.updateChainFromMno(hvo.getMno());
         }
         for (long vno : mdto.getCorrectList()) {
