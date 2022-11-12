@@ -13,4 +13,6 @@ public class CalendarDTO {
     private long hno;
     private String date;
     private boolean challenge;
+    private int correct;
+    private int goal;
 }

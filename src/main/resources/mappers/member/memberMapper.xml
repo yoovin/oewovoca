@@ -8,7 +8,7 @@
         select * from member where email = #{email} and is_removed = 'N'
     </select>
     <select id="selectOneFromMno" parameterType="int" resultType="mvo">
-        select * from member where mno = #{mno} is_removed = 'N'
+        select * from member where mno = #{mno} and is_removed = 'N'
     </select>
     <update id="lastLogin" parameterType="String">
         update member set last_login = now() where email = #{email}
@@ -18,5 +18,16 @@
     </update>
     <update id="deleteFromMno" parameterType="int">
         update member set is_removed = 'Y' where mno = #{mno} and is_removed = 'N'
+    </update>
+    <update id="updateChainFromMno" parameterType="int">
+        update member set chain = chain + 1 where mno = #{mno}
+    </update>
+    <update id="updateChainReset">
+        update member set chain = 0 where mno not in (
+        select mno from history where
+        challenge = 1 and 
+        date_format(reg_at, '%y-%m-%d') 
+        = date_format(date_sub(now(), interval 1 day) , '%y-%m-%d')
+        )
     </update>
 </mapper>

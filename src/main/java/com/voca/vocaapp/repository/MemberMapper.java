@@ -12,4 +12,6 @@ public interface MemberMapper {
     public int updateMemberFromMno(MemberVO mvo);
     public int lastLogin(String email);
     public int deleteFromMno(int mno);
+    public int updateChainFromMno(int mno);
+    public int updateChainReset();
 }

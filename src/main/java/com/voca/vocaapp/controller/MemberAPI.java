@@ -53,7 +53,7 @@ public class MemberAPI {
     }
 
     @GetMapping("/calendar/{mno}/{year}/{month}")
-    public List<CalendarDTO> spreadCalendar(@PathVariable int mno, @PathVariable int year, @PathVariable int month) {
+    public List<CalendarDTO> spreadCalendar(@PathVariable int mno, @PathVariable String year, @PathVariable String month) {
         log.info("MemberAPI > calendar > GET");
         return msv.getCalendar(mno, year, month);
     }

@@ -1,5 +1,7 @@
 package com.voca.vocaapp.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +26,29 @@ public class VocaAPI {
     @Autowired
     private VocaService vsv;
 
-    @GetMapping("/today/{mno}")
-    public TodayDTO spreadToday(@PathVariable int mno) {
+    @GetMapping("/today/{mno}/{regAt}")
+    public TodayDTO spreadToday(@PathVariable("mno") int mno, @PathVariable("regAt") String regAt) {
         log.info("VocaAPI > spreadToday > GET");
-        return vsv.getTodayList(mno);
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (regAt.equals(today.format(df))) {
+            return vsv.getTodayList(mno);
+        } else {
+            return vsv.getHistoryList(mno, regAt);
+        }
     }
     
-    @GetMapping("/history/{mno}/{regAt}")
-    public TodayDTO spreadHistory(@PathVariable int mno, @PathVariable String regAt) {
-        log.info("VocaAPI > spreadHistory > GET");
-        return vsv.getHistoryList(mno, regAt);
-    }
-
     @PutMapping("/today/{hno}")
     public int mark(@RequestBody MarkDTO mdto) {
         log.info("VocaAPI > mark > PUT");
         return vsv.marking(mdto);
     }
+
+    // @GetMapping("/history/{mno}/{regAt}")
+    // public TodayDTO spreadHistory(@PathVariable int mno, @PathVariable String regAt) {
+    //     log.info("VocaAPI > spreadHistory > GET");
+    //     return vsv.getHistoryList(mno, regAt);
+    // }
 
     @GetMapping("/means")
     public List<String> spreadMeans() {

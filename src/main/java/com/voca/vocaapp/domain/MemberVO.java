@@ -18,4 +18,5 @@ public class MemberVO {
     private String regAt;
     private String modAt;
     private char isRemoved;
+    private int chain;
 }

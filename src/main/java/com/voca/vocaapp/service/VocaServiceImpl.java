@@ -1,5 +1,7 @@
 package com.voca.vocaapp.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +47,7 @@ public class VocaServiceImpl implements VocaService {
         HistoryVO hvo = historyMapper.selectTodayFromMno(mno);
         if (hvo == null) {
             MemberVO mvo = memberMapper.selectOneFromMno(mno);
-            int isUp = historyMapper.insertToday(mno);
+            int isUp = historyMapper.insertToday(mvo);
             if (isUp > 0) {
                 hvo = historyMapper.selectTodayFromMno(mno);
                 SearchDTO sdto = new SearchDTO();
@@ -89,7 +91,13 @@ public class VocaServiceImpl implements VocaService {
     @Override
     @Transactional
     public int marking(MarkDTO mdto) {
-        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), true));
+        HistoryVO hvo = historyMapper.selectOneFromHno(mdto.getHno());
+        int isUp = historyMapper.updateChallenge(new HistoryVO(mdto.getHno(), mdto.getCorrectList().size(), true));
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (isUp > 0 && hvo != null && !hvo.isChallenge() && today.format(df).equals(hvo.getRegAt().substring(0, 10))) {
+            memberMapper.updateChainFromMno(hvo.getMno());
+        }
         for (long vno : mdto.getCorrectList()) {
             if (isUp > 0) {
                 isUp *= vocaHistoryMapper.updateCorrect(new VocaHistoryVO(mdto.getHno(), vno, true));
