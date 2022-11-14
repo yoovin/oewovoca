@@ -5,6 +5,7 @@
         select v.vno, v.origin, v.mean from voca v join (
             select vno, vhno from voca_history vh
             where mno = #{mno}
+            and is_new = 1
         ) vh on v.vno = vh.vno
         order by rand() limit #{goal}
     </select>
